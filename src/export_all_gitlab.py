@@ -38,7 +38,7 @@ for i in range(1, MAXIMUM_PROJECT_ID):
 
     # Clone the repository
     clone_path = os.path.join(CLONE_DIR, project_path)
-    if not os.path.exists(os.path.join(project_path, ".git")):
+    if not os.path.exists(os.path.join(clone_path, ".git")):
         os.makedirs(clone_path, exist_ok=True)
         os.chdir(clone_path)
         os.system(f"git clone {repository_url}")
