@@ -62,35 +62,56 @@ def update_versions(version_file: IO, output_file: IO, verbose:bool = False)->in
     return result
 
 if __name__ == "__main__":
-    import optparse
 
     if sys.version_info < (3, 6):
         print("This script requires Python 3.6 or later")
         sys.exit(1)
 
-    parser = optparse.OptionParser(usage="usage: %prog [options]",
-                      description="""This script update package version from version.cfg file if passed or from stdin.
-                      The output is written to stdout by default or to the file passed as argument.""")
-    parser.add_option("-f", "--file", dest="version_file_path", help="Path to the version.cfg file, default is stdin.")
-    parser.set_defaults(version_file_path="stdin")
-    parser.add_option("-v", "--verbose", dest="verbose", action="store_true", help="Verbose mode.")
-    parser.set_defaults(verbose=False)
-    parser.add_option("-o", "--output", dest="output_file_path", help="Path to the output file, default is stdout.")
-    parser.set_defaults(output_file_path="stdout")
-    options, args = parser.parse_args()
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [options]",
+        description="""This script updates the package version from version.cfg file if passed or from stdin.
+                    The output is written to stdout by default or to the file passed as an argument."""
+    )
+
+    parser.add_argument(
+        "-f",
+        "--file",
+        dest="version_file_path",
+        default="stdin",
+        help="Path to the version.cfg file, default is stdin."
+    )
+
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        dest="verbose",
+        action="store_true",
+        help="Verbose mode."
+    )
+
+    parser.add_argument(
+        "-o",
+        "--output",
+        dest="output_file_path",
+        default="stdout",
+        help="Path to the output file, default is stdout."
+    )
+    args = parser.parse_args()
     resultat = 1
     version_file = None
     output_file = None
     try:
-        if options.version_file_path == "stdin":
+        if args.version_file_path == "stdin":
             version_file = sys.stdin
         else:
-            version_file = open(options.version_file_path, "r")
-        if options.output_file_path == "stdout":
+            version_file = open(args.version_file_path, "r")
+        if args.output_file_path == "stdout":
             output_file = sys.stdout
         else:
-            output_file = open(options.output_file_path, "w")
-        resultat = update_versions(version_file, output_file, verbose=options.verbose)
+            output_file = open(args.output_file_path, "w")
+        resultat = update_versions(version_file, output_file, verbose=args.verbose)
     except Exception as e:
         print(e, sys.stderr)
     finally :
