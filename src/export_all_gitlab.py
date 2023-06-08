@@ -4,18 +4,14 @@
 import os
 import requests
 
-# Set your GitLab URL and access token
+# Example for GitLab URL and access token
 GITLAB_HOST = "git.ecreall.com"
-GITLAB_HOST = "gitlab.com/michaellaunay/test_gitlab"
-# Fill with your own token
+# Example of token
 # For token creation, see https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
-ACCESS_TOKEN = "TOKEN FOR GITLAB-CE ROOT"
-ACCESS_TOKEN = "glpat-otiAoU9NwHSy2zJxUJDp"
+ACCESS_TOKEN = "glpat-otiAoU9NwHSy2zJxUJDp" # This token is expired and here for example
 # Adapt this value to oversize your GitLab instance
-MAXIMUM_PROJECT_ID = 400
-MAXIMUM_PROJECT_ID = 4
-# Set the directory where you want to clone the repositories
-CLONE_DIR = "/home/michaellaunay/workspace"
+MAXIMUM_PROJECT_ID = 400 # My 64 projects are numbered from 165 to 235 in a discontinuous manner.
+# Example of directory where to clone the repositories, i'm on Ubuntu
 CLONE_DIR = "/tmp/workspace"
 
 def clone_project(gitlab_host:str=GITLAB_HOST,
