@@ -47,10 +47,12 @@ with open(args.source_file) as youtube_video_page :
         matchs = a_reg.findall(line)
         if matchs:
             for id in matchs:
+                id = id.split('&amp')[0]
+
                 if len(id) == 11:
                     hrefs[id] = Video(id, f"https://youtube.com/watch?v={id}&ab_channel={args.channel}")
                 else:
-                    print("Strange id {id} for line {line}", file=sys.stderr)
+                    print(f"Strange id {id} for line {line}", file=sys.stderr)
 
 #Check if video is allready downloaded with id
 print(f"Ids to download = {hrefs.keys()}")
